@@ -40,14 +40,14 @@ public class Main extends Activity implements LocationListener {
         uid = tManager.getDeviceId();
         
  
-            // Get the location from Network (Wifi /3G)
-            Location location = locationManager.getLastKnownLocation(provider);
+        // Get the location from Network (Wifi /3G)
+        Location location = locationManager.getLastKnownLocation(provider);
  
-            locationManager.requestLocationUpdates(provider, 1000, 1, this);
+        locationManager.requestLocationUpdates(provider, 1000, 1, this);
  
-            if(location!=null)
+        if(location!=null)
                 onLocationChanged(location);
-            else
+        else
                 Toast.makeText(getBaseContext(), "Location can't be retrieved", Toast.LENGTH_SHORT).show();
  
             // Get the location from GPS
@@ -59,7 +59,7 @@ public class Main extends Activity implements LocationListener {
                 onLocationChanged(locationGPS);
             else
                 Toast.makeText(getBaseContext(), "GPS Location can't be retrieved", Toast.LENGTH_SHORT).show();
-   
+            
     }
 
 	@Override
@@ -154,6 +154,7 @@ public class Main extends Activity implements LocationListener {
         public void onStatusChanged(String providerGPS, int status, Bundle extras) {
            // called when the status of the GPS provider changes
         }
+        
 }
 
     
