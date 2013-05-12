@@ -4,6 +4,7 @@ package nl.hva.proveit.locationfinder;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,15 +15,23 @@ import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v4.app.FragmentActivity;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class Main extends Activity implements LocationListener {
+public class Main extends FragmentActivity implements LocationListener {
 	  LocationManager locationManager ;
 	  LocationManager locationManagerGPS ;
 	  String provider;
 	  String providerGPS;
 	  String uid;
 	  LocationListener locationListener = new GPSLocationListener();
-	  
+	  GoogleMap googleMap;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +68,15 @@ public class Main extends Activity implements LocationListener {
                 onLocationChanged(locationGPS);
             else
                 Toast.makeText(getBaseContext(), "GPS Location can't be retrieved", Toast.LENGTH_SHORT).show();
-            
+            // Getting reference to the SupportMapFragment of activity_main.xml
+            SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+ 
+            // Getting GoogleMap object from the fragment
+            googleMap = fm.getMap();
+ 
+            // Enabling MyLocation Layer of Google Map
+            googleMap.setMyLocationEnabled(true);
+ 
     }
 
 	@Override
@@ -125,7 +142,17 @@ public class Main extends Activity implements LocationListener {
 
             // Setting Current Longitude
             tvLongitudeGPS.setText("Longitude:" + locationGPS.getLongitude());
-
+            
+            // Creating a LatLng object for the current location
+            LatLng latLng = new LatLng(locationGPS.getLatitude(), locationGPS.getLongitude());
+     
+            // Showing the current location in Google Map
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+     
+            // Zoom in the Google Map
+            googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+     
+            
             // Setting Current Latitude
             tvLatitudeGPS.setText("Latitude:" + locationGPS.getLatitude() );
             FileWriter fWriter;
