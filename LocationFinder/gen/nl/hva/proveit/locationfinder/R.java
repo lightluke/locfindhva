@@ -132,10 +132,8 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int Exit=0x7f04000d;
         public static final int hybrid=0x7f040004;
         public static final int map=0x7f04000b;
-        public static final int menu_settings=0x7f04000c;
         public static final int none=0x7f040000;
         public static final int normal=0x7f040001;
         public static final int satellite=0x7f040002;
